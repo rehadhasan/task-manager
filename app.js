@@ -39,17 +39,11 @@ app.use(Limiter)
 // API routes
 app.use('/api/v1', router)
 
-// Serve React frontend (static files)
-app.use(express.static(path.join(__dirname, '../frontend/dist')))
+app.use(express.static('client/dist'))
 
-// For client-side routing, serve index.html for all non-API requests
-app.get(/^\/(?!api).*/, (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/dist', 'index.html'))
-})
-
-// Catch all for unknown routes (optional fallback for API calls)
-app.get('*', function (req, res) {
-    res.status(404).json({ status: "fail", data: "Not Found" })
+// Add React Front End Routing
+app.get('*', function (req,res) {
+    res.sendFile(path.resolve(__dirname,'client', 'dist', 'index.html'))
 })
 
 module.exports = app;
