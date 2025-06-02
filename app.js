@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
@@ -11,16 +13,12 @@ const router = require('./src/routes/api')
 
 const app = new express()
 
-// MongoDB connection string
-let URL = "mongodb+srv://rehad:624602@cluster0.f764rqj.mongodb.net/Task-Manager"
+// Use MONGO_URI from .env
+let URL = process.env.MONGO_URI;
 
 mongoose.connect(URL)
-    .then(() => {
-        console.log("Database Connected")
-    })
-    .catch((err) => {
-        console.log(err)
-    })
+    .then(() => console.log("Database Connected"))
+    .catch((err) => console.error(err));
 
 // Middlewares
 app.use(bodyParser())
